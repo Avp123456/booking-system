@@ -11,10 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -31,11 +27,9 @@ public class AuthController {
 
         UserDetails ud = (UserDetails) auth.getPrincipal();
 
-        // include roles in claims
-        Map<String, Object> extra = new HashMap<>();
-        extra.put("roles", ud.getAuthorities().stream().map(Object::toString).collect(Collectors.toList()));
+        // ✅ directly pass UserDetails to JwtUtil
+        String token = jwtUtil.generateToken(ud);
 
-        String token = jwtUtil.generateToken(ud.getUsername(), extra);
         return ResponseEntity.ok(new AuthResponse(token));
     }
 }

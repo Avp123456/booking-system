@@ -11,10 +11,13 @@ import org.springframework.context.annotation.Bean;
 import java.util.Set;
 
 @SpringBootApplication
-@RequiredArgsConstructor
+@RequiredArgsConstructor  //lombok annotations 
 public class BookingSystemApplication {
 
     private final UserService userService;
+    //it is a service class that have business logic related to user
+    //i.e user cretion,validation and database operations
+    
 
     public static void main(String[] args) {
         SpringApplication.run(BookingSystemApplication.class, args);
